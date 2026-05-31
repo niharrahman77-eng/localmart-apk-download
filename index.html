@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Local Mart – Your Neighbourhood Shopping App</title>
+  <title>LMFY – LocalMart For You</title>
+  <link rel="icon" type="image/png" href="logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0e0f0c;
-      --surface: #161714;
-      --card: #1e1f1b;
-      --border: #2e2f2a;
-      --accent: #c8f04a;
-      --accent2: #f0a84a;
-      --text: #f0ede6;
-      --muted: #888880;
-      --radius: 20px;
+      --green1: #4caf1a;
+      --green2: #7dd620;
+      --green3: #a8ed3a;
+      --bg: #0a120a;
+      --surface: #111a0f;
+      --card: #162013;
+      --border: #243020;
+      --text: #eef5e8;
+      --muted: #7a9470;
+      --radius: 22px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -30,330 +31,391 @@
       overflow-x: hidden;
     }
 
-    /* ── Noise texture overlay ── */
-    body::before {
+    /* grain */
+    body::after {
       content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
     }
 
-    /* ── Nav ── */
+    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px;
-      backdrop-filter: blur(16px);
-      background: rgba(14,15,12,.8);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+      backdrop-filter: blur(20px);
+      background: rgba(10,18,10,.85);
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.3rem;
-      letter-spacing: -.02em;
-      color: var(--accent);
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
     }
-    .nav-logo span { color: var(--text); }
+    .nav-logo-img {
+      width: 40px; height: 40px;
+      border-radius: 11px;
+      object-fit: cover;
+    }
+    .nav-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.15rem;
+      letter-spacing: -.02em;
+      color: var(--text);
+    }
+    .nav-name span { color: var(--green2); }
 
-    nav a {
+    .nav-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--green3);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+
+    nav a.nav-link {
       color: var(--muted);
       text-decoration: none;
-      font-size: .9rem;
+      font-size: .88rem;
       transition: color .2s;
     }
-    nav a:hover { color: var(--text); }
+    nav a.nav-link:hover { color: var(--text); }
 
-    /* ── Hero ── */
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    /* ── HERO ── */
     .hero {
       position: relative;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       padding: 120px 24px 80px;
       overflow: hidden;
     }
 
-    /* glowing blobs */
     .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: .25;
-      pointer-events: none;
-      animation: drift 10s ease-in-out infinite alternate;
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none;
+      animation: drift 12s ease-in-out infinite alternate;
     }
-    .blob1 { width: 500px; height: 500px; background: var(--accent); top: -100px; left: -150px; }
-    .blob2 { width: 400px; height: 400px; background: var(--accent2); bottom: 0; right: -100px; animation-delay: -4s; }
+    .b1 { width: 550px; height: 550px; background: var(--green1); opacity: .18; top: -120px; left: -160px; }
+    .b2 { width: 420px; height: 420px; background: var(--green2); opacity: .14; bottom: -80px; right: -100px; animation-delay: -5s; }
 
     @keyframes drift {
       from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(40px,30px) scale(1.06); }
+      to   { transform: translate(50px,35px) scale(1.07); }
     }
 
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+      max-width: 1100px;
+      width: 100%;
+      position: relative; z-index: 1;
+    }
+
+    .hero-left { display: flex; flex-direction: column; }
+
     .badge {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: 8px;
       border: 1px solid var(--border);
       background: var(--card);
-      color: var(--accent);
-      font-size: .78rem;
-      font-weight: 500;
-      padding: 6px 16px;
-      border-radius: 999px;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      animation: fadeUp .6s ease both;
+      color: var(--green3);
+      font-size: .78rem; font-weight: 600;
+      padding: 7px 16px; border-radius: 999px;
+      letter-spacing: .05em; text-transform: uppercase;
+      margin-bottom: 28px; width: fit-content;
+      animation: fadeUp .5s ease both;
+    }
+
+    .badge-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%; background: var(--green2);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(1.4); }
     }
 
     h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.8rem, 7vw, 6rem);
-      font-weight: 800;
-      line-height: 1.0;
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      font-weight: 800; line-height: 1.0;
       letter-spacing: -.03em;
-      max-width: 820px;
-      animation: fadeUp .7s .1s ease both;
+      animation: fadeUp .6s .1s ease both;
+    }
+    h1 .green { color: var(--green2); }
+    h1 .lmfy-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--green1), var(--green2));
+      color: #0a120a;
+      padding: 2px 14px; border-radius: 10px;
+      font-size: clamp(2rem, 4vw, 3.8rem);
     }
 
-    h1 em {
-      font-style: normal;
-      color: var(--accent);
+    .sub {
+      margin-top: 22px;
+      font-size: 1.05rem; color: var(--muted);
+      line-height: 1.7; max-width: 440px;
+      animation: fadeUp .6s .2s ease both;
     }
 
-    .subtitle {
-      margin-top: 24px;
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 480px;
-      line-height: 1.65;
-      animation: fadeUp .7s .2s ease both;
+    /* stats row */
+    .stats {
+      display: flex; gap: 28px;
+      margin-top: 32px;
+      animation: fadeUp .6s .3s ease both;
+    }
+    .stat { }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem; font-weight: 800;
+      color: var(--green2);
+    }
+    .stat-label { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+
+    /* download btn */
+    .btn-dl {
+      margin-top: 40px;
+      display: inline-flex; align-items: center; gap: 12px;
+      background: linear-gradient(135deg, var(--green1), var(--green2));
+      color: #061006;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem;
+      padding: 16px 32px; border-radius: 16px;
+      text-decoration: none; width: fit-content;
+      transition: transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 24px rgba(76,175,26,.25);
+      animation: fadeUp .6s .4s ease both;
+    }
+    .btn-dl:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(76,175,26,.4);
+    }
+    .btn-dl:active { transform: translateY(0); }
+
+    .btn-meta {
+      margin-top: 12px;
+      font-size: .78rem; color: var(--muted);
+      animation: fadeUp .6s .45s ease both;
     }
 
-    /* ── Download card ── */
-    .download-card {
-      margin-top: 52px;
+    /* ── Hero right: phone mockup ── */
+    .hero-right {
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeUp .8s .2s ease both;
+    }
+
+    .phone-wrap {
+      position: relative;
+      width: 280px;
+    }
+
+    .phone-frame {
+      width: 280px; height: 560px;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 40px 100px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    /* phone screen */
+    .phone-screen {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: linear-gradient(160deg, #0e1c0b 0%, #162013 100%);
+      gap: 20px; padding: 32px 20px;
+    }
+
+    .phone-logo {
+      width: 110px; height: 110px;
+      border-radius: 28px;
+      object-fit: cover;
+      box-shadow: 0 16px 48px rgba(76,175,26,.4);
+    }
+
+    .phone-appname {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem; font-weight: 800;
+      color: var(--text); letter-spacing: -.02em;
+    }
+    .phone-tagline {
+      font-size: .8rem; color: var(--muted);
+      text-align: center; line-height: 1.5;
+    }
+
+    .phone-dl-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--green1), var(--green2));
+      color: #061006;
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      padding: 13px 0; border-radius: 14px;
+      text-align: center; font-size: .95rem;
+      text-decoration: none;
+      display: block;
+      margin-top: 8px;
+    }
+
+    .phone-notch {
+      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 10px;
+      background: var(--bg); border-radius: 999px; z-index: 2;
+    }
+
+    /* floating chips around phone */
+    .chip {
+      position: absolute;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px 40px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      max-width: 560px;
-      width: 100%;
-      position: relative;
-      animation: fadeUp .7s .35s ease both;
-      transition: border-color .3s;
-    }
-    .download-card:hover { border-color: var(--accent); }
-
-    .apk-icon {
-      width: 72px; height: 72px;
-      background: linear-gradient(135deg, var(--accent), #a8d400);
-      border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      flex-shrink: 0;
-    }
-
-    .apk-info { flex: 1; text-align: left; }
-    .apk-info h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .apk-meta {
-      display: flex; gap: 12px; margin-top: 6px;
-      flex-wrap: wrap;
-    }
-    .apk-meta span {
-      font-size: .78rem;
-      color: var(--muted);
-      background: var(--surface);
-      padding: 3px 10px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-    }
-
-    .btn-download {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--accent);
-      color: #0e0f0c;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      padding: 14px 28px;
-      border-radius: 14px;
-      text-decoration: none;
+      padding: 8px 16px;
+      font-size: .78rem; font-weight: 500;
+      display: flex; align-items: center; gap: 7px;
       white-space: nowrap;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 0 0 0 rgba(200,240,74,0);
+      animation: float 4s ease-in-out infinite alternate;
     }
-    .btn-download:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(200,240,74,.3);
+    .chip1 { top: 60px; left: -110px; animation-delay: 0s; }
+    .chip2 { top: 180px; right: -120px; animation-delay: -1.5s; }
+    .chip3 { bottom: 140px; left: -100px; animation-delay: -3s; }
+
+    @keyframes float {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-10px); }
     }
-    .btn-download:active { transform: translateY(0); }
 
-    .btn-download svg { flex-shrink: 0; }
-
-    /* install notice */
-    .install-notice {
-      margin-top: 16px;
-      font-size: .82rem;
-      color: var(--muted);
-      animation: fadeUp .7s .45s ease both;
-    }
-    .install-notice a { color: var(--accent); text-decoration: none; }
-    .install-notice a:hover { text-decoration: underline; }
-
-    /* ── Steps ── */
+    /* ── FEATURES ── */
     .section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 80px 24px;
+      max-width: 1000px; margin: 0 auto; padding: 90px 24px;
+      position: relative; z-index: 1;
     }
 
     .section-label {
-      font-size: .78rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--green2); margin-bottom: 10px;
     }
 
     .section h2 {
       font-family: 'Syne', sans-serif;
       font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      letter-spacing: -.02em;
+      font-weight: 800; letter-spacing: -.025em;
       margin-bottom: 48px;
     }
 
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .step {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-      position: relative;
-      transition: border-color .3s, transform .3s;
-    }
-    .step:hover { border-color: var(--accent); transform: translateY(-4px); }
-
-    .step-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 3rem;
-      font-weight: 800;
-      color: var(--accent);
-      opacity: .2;
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-
-    .step h4 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .step p {
-      font-size: .9rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* ── Features ── */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      gap: 18px;
     }
 
-    .feature {
+    .feat {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 28px;
-      transition: border-color .3s;
+      transition: border-color .3s, transform .3s;
     }
-    .feature:hover { border-color: var(--accent2); }
+    .feat:hover { border-color: var(--green1); transform: translateY(-4px); }
 
     .feat-icon {
-      width: 48px; height: 48px;
+      width: 50px; height: 50px;
+      background: linear-gradient(135deg, rgba(76,175,26,.25), rgba(125,214,32,.15));
+      border: 1px solid rgba(76,175,26,.3);
       border-radius: 14px;
-      background: linear-gradient(135deg, var(--accent2), #f07a20);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 18px;
+      font-size: 1.4rem; margin-bottom: 18px;
     }
-
-    .feature h4 {
+    .feat h4 {
       font-family: 'Syne', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 1rem; font-weight: 700; margin-bottom: 8px;
     }
-    .feature p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+    .feat p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
 
-    /* ── CTA strip ── */
-    .cta-strip {
-      background: var(--card);
+    /* ── HOW TO INSTALL ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+    }
+    .step {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: border-color .3s, transform .3s;
+    }
+    .step:hover { border-color: var(--green2); transform: translateY(-4px); }
+    .step-num {
+      font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+      color: var(--green2); opacity: .2; line-height: 1; margin-bottom: 12px;
+    }
+    .step h4 {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 8px;
+    }
+    .step p { font-size: .87rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── CTA ── */
+    .cta {
+      background: linear-gradient(135deg, #0e1c0b, #162013);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      text-align: center;
-      padding: 72px 24px;
+      text-align: center; padding: 80px 24px;
+      position: relative; z-index: 1;
     }
-    .cta-strip h2 {
+
+    .cta-logo {
+      width: 88px; height: 88px;
+      border-radius: 22px; object-fit: cover;
+      margin: 0 auto 24px;
+      box-shadow: 0 16px 48px rgba(76,175,26,.35);
+      display: block;
+    }
+
+    .cta h2 {
       font-family: 'Syne', sans-serif;
       font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -.02em;
-      margin-bottom: 24px;
+      font-weight: 800; letter-spacing: -.025em;
+      margin-bottom: 12px;
     }
-    .cta-strip h2 span { color: var(--accent); }
+    .cta h2 span { color: var(--green2); }
+    .cta p { color: var(--muted); margin-bottom: 32px; font-size: 1rem; }
 
-    /* ── Footer ── */
+    /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 32px 24px;
-      color: var(--muted);
-      font-size: .82rem;
+      text-align: center; padding: 32px 24px;
+      color: var(--muted); font-size: .82rem;
       border-top: 1px solid var(--border);
+      position: relative; z-index: 1;
     }
+    footer strong { color: var(--green2); }
 
     /* ── Animations ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── Responsive ── */
-    @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
-      .download-card { flex-direction: column; text-align: center; padding: 24px 20px; }
-      .apk-info { text-align: center; }
-      .apk-meta { justify-content: center; }
+    @media (max-width: 768px) {
+      nav { padding: 14px 18px; }
+      .nav-right .nav-link { display: none; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .badge, .btn-dl { margin-left: auto; margin-right: auto; }
+      .sub { margin-left: auto; margin-right: auto; }
+      .stats { justify-content: center; }
+      .chip { display: none; }
+      .hero-right { order: -1; }
+      .phone-wrap { width: 220px; }
+      .phone-frame { width: 220px; height: 440px; }
     }
   </style>
 </head>
@@ -361,136 +423,175 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Local<span>Mart</span></div>
-  <a href="#install">How to Install</a>
+  <a class="nav-brand" href="#">
+    <img class="nav-logo-img" src="logo.png" alt="LMFY Logo" />
+    <span class="nav-name">LM<span>FY</span></span>
+  </a>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#install" class="nav-link">Install Guide</a>
+    <span class="nav-pill">Free App</span>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
 
-  <div class="badge">🛒 Now Available for Android</div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Now delivering in your local area
+      </div>
 
-  <h1>Shop Local.<br /><em>Shop Smart.</em></h1>
+      <h1>
+        <span class="lmfy-tag">LMFY</span><br />
+        <span class="green">LocalMart</span><br />
+        For You
+      </h1>
 
-  <p class="subtitle">
-    Local Mart brings your neighbourhood stores to your fingertips.
-    Browse, order, and support local businesses — all in one free app.
-  </p>
+      <p class="sub">
+        Order from your favourite local shops and get everything delivered
+        right to your doorstep. Fresh, fast, and always nearby.
+      </p>
 
-  <!-- Download card -->
-  <div class="download-card">
-    <div class="apk-icon">🛍️</div>
-    <div class="apk-info">
-      <h3>LocalMart.apk</h3>
-      <div class="apk-meta">
-        <span>Android</span>
-        <span>5.6 MB</span>
-        <span>Free</span>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Free App</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Local</div>
+          <div class="stat-label">Delivery</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Android</div>
+          <div class="stat-label">Supported</div>
+        </div>
+      </div>
+
+      <a class="btn-dl" href="LocalMart.apk" download="LocalMart.apk">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download LMFY – Free APK
+      </a>
+      <p class="btn-meta">Android · 5.6 MB · No sign-up needed to download</p>
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="hero-right">
+      <div class="phone-wrap">
+        <!-- floating chips -->
+        <div class="chip chip1">🚴 Fast Delivery</div>
+        <div class="chip chip2">🏪 Local Shops</div>
+        <div class="chip chip3">✅ Free</div>
+
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img class="phone-logo" src="logo.png" alt="LMFY" />
+            <div class="phone-appname">LMFY</div>
+            <div class="phone-tagline">LocalMart For You<br/>Your neighbourhood, delivered.</div>
+            <a class="phone-dl-btn" href="LocalMart.apk" download="LocalMart.apk">⬇ Download Now</a>
+          </div>
+        </div>
       </div>
     </div>
-    <a class="btn-download" href="LocalMart.apk" download="LocalMart.apk">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="7 10 12 15 17 10"/>
-        <line x1="12" y1="15" x2="12" y2="3"/>
-      </svg>
-      Download
-    </a>
   </div>
-
-  <p class="install-notice">
-    Android only · Enable <strong>"Install from unknown sources"</strong> before installing ·
-    <a href="#install">See guide ↓</a>
-  </p>
 </section>
 
 <!-- FEATURES -->
-<section class="section">
-  <p class="section-label">Why Local Mart</p>
-  <h2>Everything you need,<br />right around the corner.</h2>
+<section class="section" id="features">
+  <p class="section-label">Why choose LMFY</p>
+  <h2>Your neighbourhood,<br />in your pocket.</h2>
 
   <div class="features">
-    <div class="feature">
+    <div class="feat">
       <div class="feat-icon">🏪</div>
       <h4>Local Stores</h4>
-      <p>Discover shops, kirana stores, and markets in your neighbourhood.</p>
+      <p>Browse kirana stores, grocery shops, and local markets all in one place.</p>
     </div>
-    <div class="feature">
-      <div class="feat-icon">⚡</div>
-      <h4>Fast Delivery</h4>
-      <p>Get your essentials delivered quickly from stores near you.</p>
+    <div class="feat">
+      <div class="feat-icon">🚴</div>
+      <h4>Local Delivery</h4>
+      <p>We deliver within your local area — fast, reliable, and always nearby.</p>
     </div>
-    <div class="feature">
-      <div class="feat-icon">💰</div>
-      <h4>Best Prices</h4>
-      <p>Compare prices across local shops and grab the best deals.</p>
+    <div class="feat">
+      <div class="feat-icon">💸</div>
+      <h4>Best Local Prices</h4>
+      <p>Get the same prices as your neighbourhood shops — no hidden markups.</p>
     </div>
-    <div class="feature">
-      <div class="feat-icon">🔒</div>
-      <h4>Safe & Secure</h4>
-      <p>Your orders and payments are fully protected and private.</p>
-    </div>
-    <div class="feature">
+    <div class="feat">
       <div class="feat-icon">📦</div>
-      <h4>Easy Tracking</h4>
-      <p>Track your orders in real time from checkout to doorstep.</p>
+      <h4>Order Tracking</h4>
+      <p>Know exactly where your order is from the moment you place it.</p>
     </div>
-    <div class="feature">
+    <div class="feat">
       <div class="feat-icon">🌱</div>
       <h4>Support Local</h4>
-      <p>Every purchase helps a local business owner in your community.</p>
+      <p>Every order goes directly to a local business owner in your community.</p>
+    </div>
+    <div class="feat">
+      <div class="feat-icon">🔒</div>
+      <h4>Safe & Trusted</h4>
+      <p>Your orders and personal data are always secure with LMFY.</p>
     </div>
   </div>
 </section>
 
-<!-- HOW TO INSTALL -->
+<!-- INSTALL GUIDE -->
 <section class="section" id="install">
   <p class="section-label">Installation Guide</p>
-  <h2>Install in 4 easy steps.</h2>
+  <h2>Get started in<br />4 simple steps.</h2>
 
   <div class="steps">
     <div class="step">
       <div class="step-num">01</div>
       <h4>Download the APK</h4>
-      <p>Tap the Download button above to save LocalMart.apk to your phone.</p>
+      <p>Tap the Download button and save the <strong>LocalMart.apk</strong> file to your phone.</p>
     </div>
     <div class="step">
       <div class="step-num">02</div>
       <h4>Allow Unknown Sources</h4>
-      <p>Go to <strong>Settings → Security → Install unknown apps</strong> and allow your browser or file manager.</p>
+      <p>Go to <strong>Settings → Security → Install unknown apps</strong> and allow your browser.</p>
     </div>
     <div class="step">
       <div class="step-num">03</div>
       <h4>Open the File</h4>
-      <p>Open the downloaded APK file from your notifications or Downloads folder.</p>
+      <p>Find and open the downloaded APK from your notifications or Downloads folder.</p>
     </div>
     <div class="step">
       <div class="step-num">04</div>
-      <h4>Tap Install &amp; Enjoy!</h4>
-      <p>Follow the prompts, install the app, and start shopping local!</p>
+      <h4>Install & Shop!</h4>
+      <p>Tap Install, open LMFY, and start ordering from your local shops today.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA STRIP -->
-<div class="cta-strip">
-  <h2>Ready to shop <span>local</span>?</h2>
-  <a class="btn-download" style="display:inline-flex;margin:0 auto;" href="LocalMart.apk" download="LocalMart.apk">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+<!-- CTA -->
+<div class="cta">
+  <img class="cta-logo" src="logo.png" alt="LMFY" />
+  <h2>Start shopping <span>local</span> today.</h2>
+  <p>Download LMFY free — available for Android</p>
+  <a class="btn-dl" style="margin:0 auto;" href="LocalMart.apk" download="LocalMart.apk">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
       <polyline points="7 10 12 15 17 10"/>
       <line x1="12" y1="15" x2="12" y2="3"/>
     </svg>
-    Download Free – Android APK
+    Free Download – Android APK
   </a>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 Local Mart · Free to download · Android only</p>
-  <p style="margin-top:6px;">Made with ❤️ for local communities</p>
+  <p>© 2026 <strong>LMFY – LocalMart For You</strong> · Free App · Android Only</p>
+  <p style="margin-top:6px;">Delivering happiness to your local community 🛍️</p>
 </footer>
 
 </body>
